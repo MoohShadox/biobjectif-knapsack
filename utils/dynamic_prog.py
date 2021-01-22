@@ -76,7 +76,7 @@ def test_dynamic_prog(n,k,c):
             id_u = list(id_u)
             s.set_ids(id_u)
             return s
-        
+
         def __eq__(self, other):
             return sorted(self.ids) == sorted(other.ids)
 
@@ -90,7 +90,7 @@ def test_dynamic_prog(n,k,c):
             self.bags.append(bg)
             L = list(self.costs)
             L.append(bg.cost)
-            self.costs = np.array(L) 
+            self.costs = np.array(L)
 
         def set_bag(self, bag):
             self.bags = []
@@ -110,11 +110,13 @@ def test_dynamic_prog(n,k,c):
             ids,msq ,c  = (pf(costs))
             self.bags = np.array(self.bags)[ids-1]
             self.costs = c
-    
+
         def add_item_to_all(self,index):
            for b in self.bags:
                b.add_item(index)
 
+        def __getitem__(self,key):
+            return self.bags[key]
 
 
         def __add__(self,cell):
@@ -124,7 +126,7 @@ def test_dynamic_prog(n,k,c):
            for b in self.bags:
                C.add_bag(b)
            return C
-        
+
         def __eq__(self, other):
             if(len(self.bags) != len(other.bags)):
                 return False
@@ -134,10 +136,10 @@ def test_dynamic_prog(n,k,c):
                     return False
             return True
 
-    
+
         def __str__(self):
             return  "\t".join([str(b) for b in self.bags])
-    
+
     def solve_exhaustif():
 
         i = combinations(np.arange(1,n+1),r = k)
